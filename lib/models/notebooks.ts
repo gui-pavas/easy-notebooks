@@ -2,23 +2,26 @@ import { Notebooks as NotebookModel } from "../generated/prisma/client";
 import prisma from "../prisma";
 
 export default class Notebook {
-    public static async index(): Promise<NotebookModel[]> {
-        return await prisma.notebooks.findMany();
+    public static async index(userId: string): Promise<NotebookModel[]> {
+        return await prisma.notebooks.findMany({
+            where: { userId },
+        });
     }
 
-    public static async create(id: string, name: string): Promise<NotebookModel> {
+    public static async create(userId: string, name: string): Promise<NotebookModel> {
         return await prisma.notebooks.create({
             data: {
-                id,
+                userId,
                 name,
             }
         });
     }
 
-    public static async findById(id: string): Promise<NotebookModel | null> {
-        return await prisma.notebooks.findUnique({
+    public static async findById(userId: string, id: string): Promise<NotebookModel | null> {
+        return await prisma.notebooks.findFirst({
             where: {
-                id
+                id,
+                userId,
             }
         });
     }
@@ -38,7 +41,15 @@ export default class Notebook {
         });
     }
 
-    public static async update(id: string, name: string): Promise<NotebookModel> {
+    public static async update(userId: string, id: string, name: string): Promise<NotebookModel | null> {
+        const notebook = await prisma.notebooks.findFirst({
+            where: { id, userId },
+        });
+
+        if (!notebook) {
+            return null;
+        }
+
         return await prisma.notebooks.update({
             where: {
                 id
@@ -49,7 +60,15 @@ export default class Notebook {
         });
     }
 
-    public static async delete(id: string): Promise<NotebookModel> {
+    public static async delete(userId: string, id: string): Promise<NotebookModel | null> {
+        const notebook = await prisma.notebooks.findFirst({
+            where: { id, userId },
+        });
+
+        if (!notebook) {
+            return null;
+        }
+
         return await prisma.notebooks.delete({
             where: {
                 id

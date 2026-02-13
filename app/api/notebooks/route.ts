@@ -1,10 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import { notebookController } from "@/lib/controllers/notebookController";
+import { resolveUserIdFromSession } from "@/lib/utils/auth";
 
 export async function GET(): Promise<NextResponse> {
-    return notebookController.index();
+    const user = await resolveUserIdFromSession();
+    if (user.response) {
+        return user.response;
+    }
+
+    return notebookController.index(user.userId);
 }
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
-    return notebookController.create(request);
+    const user = await resolveUserIdFromSession();
+    if (user.response) {
+        return user.response;
+    }
+
+    return notebookController.create(user.userId, request);
 }

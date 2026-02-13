@@ -11,7 +11,9 @@ function createPrismaClient() {
     throw new Error('DATABASE_URL is not set')
   }
 
-  const adapter = new PrismaPg({ connectionString })
+  const url = new URL(connectionString)
+  const schema = url.searchParams.get('schema') ?? undefined
+  const adapter = new PrismaPg({ connectionString }, { schema })
   return new PrismaClient({ adapter })
 }
 

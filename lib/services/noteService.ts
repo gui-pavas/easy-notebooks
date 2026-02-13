@@ -2,32 +2,32 @@ import { Notes as NotesModel } from "../generated/prisma/client";
 import Notes from "../models/notes";
 
 interface INotesService {
-    index(): Promise<NotesModel[]>;
-    create(NotebookId: string, name: string, content: string): Promise<NotesModel>;
-    findById(id: string): Promise<NotesModel | null>;
-    update(id: string, name: string, content: string): Promise<NotesModel>;
-    delete(id: string): Promise<NotesModel>;
+    index(userId: string): Promise<NotesModel[]>;
+    create(userId: string, notebookId: string, name: string, content: string): Promise<NotesModel | null>;
+    findById(userId: string, id: string): Promise<NotesModel | null>;
+    update(userId: string, id: string, name: string, content: string): Promise<NotesModel | null>;
+    delete(userId: string, id: string): Promise<NotesModel | null>;
 }
 
 class NotesService implements INotesService {
-    public async index(): Promise<NotesModel[]> {
-        return Notes.index();
+    public async index(userId: string): Promise<NotesModel[]> {
+        return Notes.index(userId);
     }
 
-    public async create(NotebookId: string, name: string, content: string): Promise<NotesModel> {
-        return Notes.create(NotebookId, name, content);
+    public async create(userId: string, notebookId: string, name: string, content: string): Promise<NotesModel | null> {
+        return Notes.create(userId, notebookId, name, content);
     }
 
-    public async findById(id: string): Promise<NotesModel | null> {
-        return Notes.findById(id);
+    public async findById(userId: string, id: string): Promise<NotesModel | null> {
+        return Notes.findById(userId, id);
     }
 
-    public async update(id: string, name: string, content: string): Promise<NotesModel> {
-        return Notes.update(id, name, content);
+    public async update(userId: string, id: string, name: string, content: string): Promise<NotesModel | null> {
+        return Notes.update(userId, id, name, content);
     }
 
-    public async delete(id: string): Promise<NotesModel> {
-        return Notes.delete(id);
+    public async delete(userId: string, id: string): Promise<NotesModel | null> {
+        return Notes.delete(userId, id);
     }
 }
 

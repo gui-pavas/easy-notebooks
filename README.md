@@ -16,7 +16,37 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Authentication Setup (NextAuth + Prisma)
+
+1. Add these variables to `.env`:
+
+```bash
+DATABASE_URL="postgresql://..."
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_SECRET="replace-with-a-long-random-string"
+SEED_USER_EMAIL="admin@example.com"
+SEED_USER_PASSWORD="change-me-please"
+SEED_USER_NAME="Admin User"
+```
+
+2. Run Prisma migrations and generate client:
+
+```bash
+bunx prisma migrate dev --name add_auth_models
+bunx prisma generate
+```
+
+3. Seed the initial user:
+
+```bash
+bun run seed
+```
+
+4. Start the app and use:
+- Public routes: `/login`, `/register`
+- Private routes: everything else
+
+Routing and protection are enforced by `lib/middleware/auth-middleware.ts` via root `proxy.ts`, and auth handlers are mounted at `app/api/auth/[...nextauth]/route.ts`.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
