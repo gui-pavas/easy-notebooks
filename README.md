@@ -48,6 +48,12 @@ bun run seed
 
 Routing and protection are enforced by `lib/middleware/auth-middleware.ts` via root `proxy.ts`, and auth handlers are mounted at `app/api/auth/[...nextauth]/route.ts`.
 
+Config abstractions live in `lib/config/`:
+- `env.ts` for required environment variables
+- `auth.ts` for NextAuth options
+- `proxy.ts` for proxy matcher/public route logic
+- `cors.ts` for reusable CORS headers
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

@@ -1,11 +1,7 @@
 import { getToken } from "next-auth/jwt";
 import { NextResponse, type NextRequest } from "next/server";
-
-const PUBLIC_ROUTES = ["/login", "/register"];
-
-function isPublicRoute(pathname: string): boolean {
-  return PUBLIC_ROUTES.some((route) => pathname === route || pathname.startsWith(`${route}/`));
-}
+import { env } from "@/lib/config/env";
+import { isPublicRoute } from "@/lib/config/proxy";
 
 export async function authProxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
@@ -16,7 +12,7 @@ export async function authProxy(request: NextRequest) {
 
   const token = await getToken({
     req: request,
-    secret: process.env.NEXTAUTH_SECRET,
+    secret: env.NEXTAUTH_SECRET,
   });
 
   const isPublic = isPublicRoute(pathname);

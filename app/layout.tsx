@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import SignOutButton from "@/components/auth/sign-out-button";
+import { authOptions } from "@/lib/config/auth";
 import { Geist, Geist_Mono } from "next/font/google";
 import AppSidebar from "@/components/layout/app-sidebar";
-import { authOptions } from "@/lib/auth";
 import { notebookService } from "@/lib/services/notebookService";
 import RouteTitle from "@/components/layout/route-title";
 import { SidebarInset, SidebarProvider, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar";

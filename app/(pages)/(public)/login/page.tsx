@@ -1,5 +1,5 @@
 import SignInForm from "@/components/auth/sign-in-form";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/lib/config/auth";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 
