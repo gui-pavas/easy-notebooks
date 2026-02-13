@@ -26,21 +26,6 @@ export default class Notebook {
         });
     }
 
-    public static async atributeNote(id: string, noteId: string): Promise<NotebookModel> {
-        return await prisma.notebooks.update({
-            where: {
-                id
-            },
-            data: {
-                notes: {
-                    connect: {
-                        id: noteId
-                    }
-                }
-            }
-        });
-    }
-
     public static async update(userId: string, id: string, name: string): Promise<NotebookModel | null> {
         const notebook = await prisma.notebooks.findFirst({
             where: { id, userId },

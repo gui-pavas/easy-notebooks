@@ -3,7 +3,6 @@ import User from "../models/users";
 
 interface IUserService {
   findByEmail(email: string): Promise<UserModel | null>;
-  findById(id: string): Promise<UserModel | null>;
   create(data: {
     email: string;
     hashedPassword: string;
@@ -14,10 +13,6 @@ interface IUserService {
 class UserService implements IUserService {
   public async findByEmail(email: string): Promise<UserModel | null> {
     return User.findByEmail(email);
-  }
-
-  public async findById(id: string): Promise<UserModel | null> {
-    return User.findById(id);
   }
 
   public async create(data: {

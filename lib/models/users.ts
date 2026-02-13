@@ -8,12 +8,6 @@ export default class User {
     });
   }
 
-  public static async findById(id: string): Promise<UserModel | null> {
-    return prisma.user.findUnique({
-      where: { id },
-    });
-  }
-
   public static async create(data: {
     email: string;
     hashedPassword: string;

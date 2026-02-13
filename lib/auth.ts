@@ -1,7 +1,6 @@
-import { compare } from "bcryptjs";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { userService } from "@/lib/services/userService";
+import { authController } from "@/lib/controllers/authController";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -18,47 +17,16 @@ export const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = credentials?.email?.trim().toLowerCase();
-        const password = credentials?.password;
-
-        if (!email || !password) {
-          return null;
-        }
-
-        const user = await userService.findByEmail(email);
-
-        if (!user) {
-          return null;
-        }
-
-        const validPassword = await compare(password, user.hashedPassword);
-        if (!validPassword) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.image,
-        };
+        return authController.authorizeCredentials(credentials);
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.sub = user.id;
-      }
-
-      return token;
+      return authController.applyJwt(token, user);
     },
     async session({ session, token }) {
-      if (session.user && token.sub) {
-        session.user.id = token.sub;
-      }
-
-      return session;
+      return authController.applySession(session, token);
     },
   },
 };
