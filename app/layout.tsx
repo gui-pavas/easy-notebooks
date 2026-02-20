@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import SignOutButton from "@/components/auth/sign-out-button";
 import { authOptions } from "@/lib/config/auth";
 import { Geist, Geist_Mono } from "next/font/google";
 import AppSidebar from "@/components/layout/app-sidebar";
 import { notebookService } from "@/lib/services/notebookService";
-import RouteTitle from "@/components/layout/route-title";
 import { SidebarInset, SidebarProvider, SidebarRail, SidebarTrigger } from "@/components/ui/sidebar";
 import { getServerSession } from "next-auth";
 import "./globals.css";
@@ -50,12 +48,8 @@ export default async function RootLayout({
           <AppSidebar notebooks={notebooks} />
           <SidebarRail />
           <SidebarInset>
-            <header className="bg-background/95 border-border sticky top-0 z-30 flex items-center justify-between gap-3 border-b px-6 py-4 backdrop-blur">
-              <div className="flex items-center gap-3">
+            <header className="bg-background/95 border-border sticky top-0 z-30 flex items-center gap-3 border-b px-6 py-4 backdrop-blur">
               <SidebarTrigger />
-              <RouteTitle notebooks={notebooks} />
-              </div>
-              <SignOutButton />
             </header>
             <main className="mx-auto w-full max-w-7xl px-6 py-6">{children}</main>
           </SidebarInset>

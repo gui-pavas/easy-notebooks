@@ -5,14 +5,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
 bun dev
 ```
+
+The `bun dev` command starts a custom server at `realtime/server.ts` so the autosave websocket endpoint is available.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 

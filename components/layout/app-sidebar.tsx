@@ -3,6 +3,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -14,19 +15,16 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
+import SignOutButton from "@/components/auth/sign-out-button";
+import { NotebookSummary } from "@/types/notebooks";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { BookOpenText, ChevronRight, House } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import * as React from "react";
 
-type NotebookNavItem = {
-  id: string;
-  name: string;
-};
-
 type AppSidebarProps = {
-  notebooks: NotebookNavItem[];
+  notebooks: NotebookSummary[];
 };
 
 export default function AppSidebar({ notebooks }: AppSidebarProps) {
@@ -102,6 +100,10 @@ export default function AppSidebar({ notebooks }: AppSidebarProps) {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="border-sidebar-border border-t">
+        <SignOutButton className="w-full justify-start" />
+      </SidebarFooter>
     </Sidebar>
   );
 }

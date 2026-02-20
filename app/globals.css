@@ -130,3 +130,24 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .note-a4-pages {
+    @apply flex flex-col gap-7 items-center py-10;
+  }
+
+  .note-a4-page-shell {
+    @apply mx-auto w-full rounded-md border border-border bg-background shadow-sm;
+    max-width: 794px;
+    min-height: 1123px;
+  }
+
+  .note-a4-editor {
+    min-height: 1123px;
+    max-height: none;
+    overflow: visible;
+    padding: 64px 56px;
+    line-height: 1.75;
+    caret-color: var(--foreground);
+  }
+}
